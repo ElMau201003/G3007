@@ -86,9 +86,9 @@ Hola desde el backend 🚀
 
 🔗 Despliegue en la nube
 
-Backend: [https://g3007-production.up.railway.app/api/hello]
+Backend: https://g3007-production.up.railway.app/api/hello
 
-Frontend: [https://g3007-159xuindu-elmau201003s-projects.vercel.app/]
+Frontend: https://g3007-159xuindu-elmau201003s-projects.vercel.app/
 
 Sustituye las URLs reales cuando despliegues.
 
