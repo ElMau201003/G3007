@@ -88,7 +88,7 @@ Hola desde el backend 🚀
 
 Backend: https://g3007-production.up.railway.app/api/hello
 
-Frontend: https://g3007-159xuindu-elmau201003s-projects.vercel.app/
+Frontend: https://g3007.vercel.app/
 
 
 
