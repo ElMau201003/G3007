@@ -5,9 +5,12 @@ function App() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/hello").then((res) => {
-      setMessage(res.data.message);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/hello`)
+      .then((res) => {
+        setMessage(res.data.message);
+      })
+      .catch((err) => setMessage("Error al conectar con backend ❌"));
   }, []);
 
   return (
