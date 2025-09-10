@@ -90,7 +90,7 @@ npm start
 ## 🌐 Despliegue en la nube
 
 * **Backend:** Railway → [https://g3007.up.railway.app](https://g3007-production.up.railway.app/api/hello)
-* **Frontend:** Vercel → [https://g3007.vercel.app](https://g3007-159xuindu-elmau201003s-projects.vercel.app/)
+* **Frontend:** Vercel → [https://g3007.vercel.app](https://g3007.vercel.app/)
 
 > Nota: el frontend consume el backend desplegado en Railway mediante variables de entorno.
 
@@ -109,7 +109,7 @@ npm start
 
 ## 📝 Autor
 
-Mauricio Gabriel Rivera Velazco – [GitHub](https://github.com/ElMau201003)
+Mauricio Gabriel Rivera Velazco
 
 Yerson Medina Vertiz
 
