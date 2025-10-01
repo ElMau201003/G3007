@@ -1,6 +1,6 @@
 // client/src/App.js
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/AuthContext.js";
 
 function App() {
   const { user, loginWithGoogle, logout } = useContext(AuthContext);
