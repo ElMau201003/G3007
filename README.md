@@ -26,6 +26,8 @@ G3007/
 ├─ client/         # Frontend React + Firebase Auth + componentes de documentos
 ├─ uploads/        # Carpeta local para archivos subidos (backend)
 └─ README.md       # Documentación general del proyecto
+```
+
 # G3007
 # Revisor Académico – Sprint 1
 
@@ -58,7 +60,6 @@ revisador-academico/
 
 ---
 
-<<<<<<< HEAD
 ## 📄 Funcionalidades implementadas
 
 ### 🔹 Backend
@@ -101,7 +102,6 @@ revisador-academico/
 * Login con Google
 * Formulario para subir documentos (`titulo + archivo`)
 * Listado dinámico de documentos del usuario con enlace para abrir cada archivo
->>>>>>> develop
 
 ---
 
@@ -141,7 +141,6 @@ npm install
 npm start
 ```
 
-<<<<<<< HEAD
 Abre `http://localhost:3000` en el navegador.
 
 ---
@@ -154,13 +153,11 @@ Abre `http://localhost:3000` en el navegador.
 > Nota: el frontend consume el backend desplegado mediante variables de entorno.
 =======
 Abre `http://localhost:3000` en tu navegador.
->>>>>>> develop
 
 ---
 
 ## 🛠️ Tecnologías utilizadas
 
-<<<<<<< HEAD
 * **Node.js & Express**
 * **MongoDB / Mongoose**
 * **React**
@@ -176,7 +173,6 @@ Abre `http://localhost:3000` en tu navegador.
 * Firebase Authentication (Google Sign-In)
 * Multer (subida de archivos local)
 * Fetch / Axios (peticiones HTTP)
->>>>>>> develop
 
 ---
 
