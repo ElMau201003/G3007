@@ -18,6 +18,7 @@ test('sube un documento y muestra mensaje de éxito', async () => {
   fireEvent.change(inputTitulo, { target: { value: 'Mi documento' } });
 
   // Buscar el input de archivo por tipo directamente
+  // eslint-disable-next-line testing-library/no-node-access
   const fileInput = screen.getByRole('button', { name: /subir/i }).form.querySelector('input[type="file"]');
   expect(fileInput).not.toBeNull();
 
