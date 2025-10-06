@@ -1,13 +1,4 @@
-Claro, Mauricio. Aquí tienes un README.md actualizado y profesional que incluye:
 
-- ✅ Descripción del proyecto  
-- ✅ Instrucciones para ejecutar pruebas  
-- ✅ Badges de cobertura y estado de CI  
-- ✅ Estructura clara y compatible con Sprint 1  
-
----
-
-```markdown
 # G3007 – Proyecto MERN: Revisor Académico
 
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
