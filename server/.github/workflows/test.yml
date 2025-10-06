@@ -1,0 +1,25 @@
+name: Backend Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: 🧰 Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      - name: 🧪 Ejecutar tests
+        run: npm test
+
+      - name: 📊 Cobertura (opcional)
+        run: npm run test:coverage
