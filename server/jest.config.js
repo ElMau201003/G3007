@@ -1,11 +1,11 @@
 export default {
-  testEnvironment: "node",
-  transform: {}, // quitamos babel-jest
-  collectCoverage: true,
-  coverageDirectory: "./coverage",
-  collectCoverageFrom: [
-    "controllers/**/*.js",
-    "models/**/*.js",
-    "utils/**/*.js"
-  ]
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.js$': 'babel-jest',
+  },
+  //extensionsToTreatAsEsm: ['.js'],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  transformIgnorePatterns: [], // 👈 esto fuerza a Jest a transformar todo, incluso node_modules si hiciera falta
 };

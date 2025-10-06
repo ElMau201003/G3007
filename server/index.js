@@ -9,6 +9,7 @@ import documentoRoutes from "./routes/documentos.js";
 import revisionRoutes from "./routes/revisiones.js";
 import reporteRoutes from "./routes/reportes.js";
 import notificacionRoutes from "./routes/notificaciones.js";
+import statusRoutes from "./routes/status.js"
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,10 @@ app.use("/api/revisiones", revisionRoutes);
 app.use("/api/reportes", reporteRoutes);
 app.use("/api/notificaciones", notificacionRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use("/api/status", statusRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`🚀 Servidor en http://localhost:${PORT}`));
+
+console.log('babel aplicado')
+export default app;
