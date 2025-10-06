@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: 🔄 Checkout repositorio
+        uses: actions/checkout@v3
+
+      - name: 🟢 Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📦 Instalar dependencias frontend
+        working-directory: client
+        run: npm install
+
+      - name: 🧪 Ejecutar pruebas frontend
+        working-directory: client
+        run: npm test -- --watchAll=false
+
+      - name: 📦 Instalar dependencias backend
+        working-directory: server
+        run: npm install
+
+      - name: 🧪 Ejecutar pruebas backend
+        working-directory: server
+        run: npm test
