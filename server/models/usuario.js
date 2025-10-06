@@ -8,6 +8,7 @@ const usuarioSchema = new mongoose.Schema({
   fecha_registro: { type: Date, default: Date.now },
   auth_provider: { type: String, default: "firebase" },
   firebase_uid: { type: String, required: true, unique: true },
+  perfilCompleto: { type: Boolean, default: false },
 });
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);

@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
       fecha_envio: new Date(),
     });
     await notificacion.save();
-    res.json(notificacion);
+    res.status(201).json(notificacion);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
