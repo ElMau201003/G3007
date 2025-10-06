@@ -1,6 +1,13 @@
 name: Backend Tests
 
 on: [push, pull_request]
+name: 🧪 CI de pruebas y cobertura
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:

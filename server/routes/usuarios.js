@@ -9,7 +9,11 @@ router.get("/:uid", async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ firebase_uid: req.params.uid });
     if (!usuario) return res.status(404).json({ message: "Usuario no encontrado" });
-    res.json(usuario);
+    res.json({
+      ...usuario.toObject(),
+      perfilCompleto: Boolean(usuario.perfilCompleto),
+    });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -38,7 +42,10 @@ router.put("/:uid", async (req, res) => {
       { new: true, upsert: true, runValidators: true }
     );
 
-    res.json(usuario);
+    res.json({
+      ...usuario.toObject(),
+      perfilCompleto: Boolean(usuario.perfilCompleto),
+    });
   } catch (error) {
     console.error("❌ Error al crear/actualizar usuario:", error);
     res.status(500).json({ message: error.message });

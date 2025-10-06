@@ -128,21 +128,24 @@ router.get("/:documentoId", async (req, res) => {
     const condiciones = mongoose.Types.ObjectId.isValid(documentoId)
       ? [
           { documento_id: new mongoose.Types.ObjectId(documentoId) },
-          { documento_id: documentoId }, // por si hay registros antiguos como string
+          { documento_id: documentoId },
         ]
       : [{ documento_id: documentoId }];
 
     const revision = await Revision.findOne({ $or: condiciones });
 
-    console.log("Consultando revisión para documento:", documentoId);
+    if (!revision) {
+      console.log("No se encontró revisión para documento:", documentoId);
+      return res.status(404).json({ message: "Revisión no encontrada" });
+    }
 
-    if (!revision) return res.status(404).json({ message: "Revisión no encontrada" });
+    console.log("Revisión encontrada para documento:", documentoId, revision);
     res.json(revision);
   } catch (error) {
     console.error("Error al obtener revisión:", error);
     res.status(500).json({ message: "Error al consultar revisión" });
   }
-  console.log("Revisión encontrada:", revision);
 });
+
 
 export default router;

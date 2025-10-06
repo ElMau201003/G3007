@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../app.status.js';
+import app from '../apps/app.status.js';
 
 test('GET /api/status responde con ok:true', async () => {
   const res = await request(app).get('/api/status');

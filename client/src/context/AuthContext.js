@@ -13,6 +13,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [profileCompleted, setProfileCompleted] = useState(false);
+  const [checkingProfile, setCheckingProfile] = useState(true);
 
   // 🔹 Login con Google
   const loginWithGoogle = async () => {
@@ -40,32 +41,34 @@ export const AuthProvider = ({ children }) => {
 
   // 🔹 Escuchar cambios de sesión
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          const res = await fetch(`http://localhost:4000/api/usuarios/${firebaseUser.uid}`);
-          if (res.ok) {
-            const data = await res.json();
-            setUser(data);
-            setProfileCompleted(Boolean(data.perfilCompleto));
+  const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    setCheckingProfile(true); // ⏳ empieza la verificación
 
-          } else {
-            console.log("Usuario no encontrado, necesita completar perfil");
-            setUser(firebaseUser);
-            setProfileCompleted(false);
-          }
-
-        } catch (error) {
-          console.error("Error al verificar perfil:", error);
+    if (firebaseUser) {
+      try {
+        const res = await fetch(`http://localhost:4000/api/usuarios/${firebaseUser.uid}`);
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+          setProfileCompleted(data.perfilCompleto === true);
+        } else {
+          setUser(firebaseUser);
           setProfileCompleted(false);
         }
-      } else {
-        setUser(null);
+      } catch (error) {
+        console.error("Error al verificar perfil:", error);
         setProfileCompleted(false);
       }
-    });
-    return () => unsubscribe();
-  }, []);
+    } else {
+      setUser(null);
+      setProfileCompleted(false);
+    }
+
+    setCheckingProfile(false); // ✅ termina la verificación
+  });
+
+  return () => unsubscribe();
+}, []);
 
   return (
     <AuthContext.Provider
@@ -77,6 +80,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         profileCompleted,
         setProfileCompleted,
+        checkingProfile,
       }}
     >
       {children}

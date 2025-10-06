@@ -1,6 +1,12 @@
-// src/App.js
-import React, { useContext, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import React, { useContext } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+
 import { AuthContext } from "./context/AuthContext.js";
 import LoginPage from "./pages/LoginPage.js";
 import HomePage from "./pages/HomePage.js";
@@ -8,20 +14,22 @@ import PerfilPage from "./pages/PerfilPage.js";
 import RevisionPage from "./pages/RevisionPage.js";
 
 function AppRoutes() {
-  const { user, profileCompleted } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { user, profileCompleted, checkingProfile } = useContext(AuthContext);
+  const location = useLocation();
 
-  useEffect(() => {
-    const path = window.location.pathname;
+  // ⏳ Esperar a que se verifique el perfil
+  if (checkingProfile) return <div>Cargando perfil...</div>;
 
-    // ✅ Solo redirigir desde el login
-    if (path === "/" || path === "/login") {
-      if (user) {
-        if (!profileCompleted) navigate("/perfil");
-        else navigate("/home");
-      }
-    }
-  }, [user, profileCompleted, navigate]);
+  // 🔁 Redirección segura desde raíz o login
+  const isRootOrLogin = ["/", "/login"].includes(location.pathname);
+
+  if (user && !profileCompleted && isRootOrLogin) {
+    return <Navigate to="/perfil" replace />;
+  }
+
+  if (user && profileCompleted && isRootOrLogin) {
+    return <Navigate to="/home" replace />;
+  }
 
   return (
     <Routes>
@@ -33,7 +41,11 @@ function AppRoutes() {
       <Route
         path="/home"
         element={
-          user && profileCompleted ? <HomePage /> : <Navigate to="/" replace />
+          user && profileCompleted ? (
+            <HomePage />
+          ) : (
+            <Navigate to="/" replace />
+          )
         }
       />
       <Route path="/revision/:id" element={<RevisionPage />} />

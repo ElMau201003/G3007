@@ -67,4 +67,9 @@ router.get("/:uid", async (req, res) => {
   }
 });
 
+router.get('/status', (req, res) => {
+  console.log('✅ Ruta /api/auth/status alcanzada');
+  res.json({ authenticated: true });
+});
+
 export default router;

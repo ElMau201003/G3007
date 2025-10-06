@@ -1,7 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import app from '../app.usuarios.js'; // registra solo /api/usuarios
+import app from '../apps/app.usuarios.js'; // registra solo /api/usuarios
 import Usuario from '../models/usuario.js';
 
 let mongo;
