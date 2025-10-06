@@ -1,23 +1,8 @@
-const request = require("supertest");
-const app = require("../server.js");
-
-// Simula Gemini
-jest.mock("../config/gemini.js", () => ({
-  models: {
-    generateContent: jest.fn().mockResolvedValue({
-      text: `{
-        "precision_gramatica": 90,
-        "similitud_plagio": 10,
-        "errores_gramaticales": [],
-        "plagio": [],
-        "citas": []
-      }`,
-    }),
-  },
-}));
+import request from "supertest";
+import app from "../server.js"; // tu Express app
 
 test("POST /api/revisiones/:id crea revisión IA", async () => {
-  const documentoId = "68e35c8fdbefe0b06331c8da"; // usa uno válido en tu BD
+  const documentoId = "68e35c8fdbefe0b06331c8da"; 
   const res = await request(app).post(`/api/revisiones/${documentoId}`);
   expect(res.statusCode).toBe(200);
   expect(res.body.estado).toBe("completada");
