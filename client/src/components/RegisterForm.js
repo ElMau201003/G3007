@@ -10,6 +10,7 @@ export default function RegisterForm() {
     password: "",
     rol: "estudiante",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,29 +18,82 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerWithEmail(form.correo, form.password);
+    setLoading(true);
+    try {
+      await registerWithEmail(form.correo, form.password);
 
-    // Enviar al backend para guardar perfil
-    await fetch("http://localhost:4000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+      // Enviar al backend para guardar perfil
+      await fetch("http://localhost:4000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    alert("Usuario registrado correctamente");
+      alert("Usuario registrado correctamente");
+    } catch (error) {
+      console.error("Error al registrar:", error);
+      alert("No se pudo registrar. Intenta de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="nombre" placeholder="Nombre" onChange={handleChange} required />
-      <input name="apellido" placeholder="Apellido" onChange={handleChange} required />
-      <input name="correo" type="email" placeholder="Correo" onChange={handleChange} required />
-      <input name="password" type="password" placeholder="Contraseña" onChange={handleChange} required />
-      <select name="rol" onChange={handleChange}>
-        <option value="estudiante">Estudiante</option>
-        <option value="docente">Docente</option>
-      </select>
-      <button type="submit">Registrar</button>
-    </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Registro de Usuario
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="nombre"
+            placeholder="Nombre"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            name="apellido"
+            placeholder="Apellido"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            name="correo"
+            type="email"
+            placeholder="Correo"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Contraseña"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            name="rol"
+            onChange={handleChange}
+            value={form.rol}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="estudiante">Estudiante</option>
+            <option value="docente">Docente</option>
+          </select>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-semibold text-white transition duration-200
+              ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+          >
+            {loading ? "Registrando..." : "Registrar"}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
