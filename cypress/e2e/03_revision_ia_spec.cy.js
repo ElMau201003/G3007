@@ -9,19 +9,27 @@ describe('Revisión IA', () => {
 
   it('Genera revisión IA y permite logout', () => {
     cy.intercept('POST', '/api/revisiones/*').as('revisar')
+
     cy.contains('Documento prueba')
       .parents('div.bg-white')
       .within(() => {
-        cy.contains('Ver Revisión IA').click()
+        cy.contains('Revisión IA').click() // 👈 ajustado al texto real
       })
+
     cy.wait('@revisar', { timeout: 20000 })
-    cy.url().should('include', '/revision')
+
+    // La URL debe incluir /revision/<id>
+    cy.url().should('include', '/revision/')
+
+    // Validar que aparecen las métricas
     cy.contains('Gramática')
     cy.contains('Similitud de plagio')
+
+    // Volver
     cy.contains('Volver').click()
 
     // Logout desde revisión
-    cy.contains('Logout').click()
+    cy.contains('Salir').click() // 👈 ajustado
     cy.url().should('include', '/')
     cy.get('button[type="submit"]').should('exist')
   })

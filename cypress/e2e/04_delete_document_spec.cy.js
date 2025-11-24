@@ -8,16 +8,21 @@ describe('Eliminar documento', () => {
   })
 
   it('Elimina documento y permite logout', () => {
+    // Aceptar confirmación de eliminación
     cy.on('window:confirm', () => true)
+
+    // Buscar documento y eliminarlo
     cy.contains('Documento prueba')
       .parents('div.bg-white')
       .within(() => {
         cy.contains('Eliminar').click()
       })
+
+    // Validar que ya no existe
     cy.contains('Documento prueba').should('not.exist')
 
     // Logout
-    cy.contains('Logout').click()
+    cy.contains('Salir').click() // 👈 corregido
     cy.url().should('include', '/')
     cy.get('button[type="submit"]').should('exist')
   })

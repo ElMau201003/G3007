@@ -2,7 +2,7 @@ describe('Flujo completo de usuario', () => {
   const email = '123@123.com'
   const password = '123456'
   const titulo = 'Documento prueba'
-  const archivo = 'ejemplo.txt'
+  const archivo = 'ejemplo.txt' // 👈 asegúrate de tener este archivo en cypress/fixtures
 
   it('Login, subir, revisar IA, eliminar y logout', () => {
     cy.visit('/')
@@ -11,22 +11,25 @@ describe('Flujo completo de usuario', () => {
     cy.get('button[type="submit"]').click()
     cy.url().should('include', '/home')
 
-    cy.get('input[type="file"]').attachFile({ filePath: archivo, mimeType: 'application/pdf' })
+    // Subir documento
+    cy.get('input[type="file"]').attachFile(archivo)
     cy.get('input[placeholder="Título del documento"]').type(titulo)
     cy.contains('button', 'Subir').click()
     cy.contains(titulo).should('exist')
 
+    // Revisar IA
     cy.intercept('POST', '/api/revisiones/*').as('revisar')
     cy.contains(titulo)
       .parents('div.bg-white')
       .within(() => {
-        cy.contains('Ver Revisión IA').click()
+        cy.contains('Revisión IA').click() // 👈 ajustado
       })
     cy.wait('@revisar')
-    cy.url({ timeout: 20000 }).should('include', '/revision')
+    cy.url({ timeout: 20000 }).should('include', '/revision/')
     cy.contains('Gramática')
     cy.contains('Similitud de plagio')
 
+    // Eliminar documento
     cy.visit('/home')
     cy.on('window:confirm', () => true)
     cy.contains(titulo)
@@ -37,7 +40,7 @@ describe('Flujo completo de usuario', () => {
     cy.contains(titulo).should('not.exist')
 
     // Logout
-    cy.contains('Logout').click()
+    cy.contains('Salir').click() // 👈 ajustado
     cy.url().should('include', '/')
     cy.get('button[type="submit"]').should('exist')
   })
