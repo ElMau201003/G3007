@@ -3,9 +3,10 @@ export default {
   transform: {
     '^.+\\.js$': 'babel-jest',
   },
-  moduleNameMapper: {
+  /*moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
-  },
+  },*/
+  moduleDirectories: ["node_modules", "server"],
   transformIgnorePatterns: [],
   coverageThreshold: {
     global: {
