@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import Revision from "../models/revision.js";
+import Documento from "../models/documento.js";
 import ai from "../config/gemini.js";
 import mammoth from "mammoth";
 import { createRequire } from "module";
@@ -113,6 +114,11 @@ Texto a analizar:
     console.log("Creando revisión para documento:", documentoId);
 
     await revision.save();
+
+    // 🔹 Actualizar también el documento en su colección
+    await Documento.findByIdAndUpdate(documentoId, { estado: "finalizado" });
+
+
     res.json(revision);
   } catch (error) {
     console.error("Error en revisión IA:", error);
