@@ -22,7 +22,7 @@ describe('Flujo completo de usuario', () => {
     cy.contains(titulo)
       .parents('div.bg-white')
       .within(() => {
-        cy.contains('Revisión IA').click() // 👈 ajustado
+        cy.contains('Revisión IA').click()
       })
     cy.wait('@revisar')
     cy.url({ timeout: 20000 }).should('include', '/revision/')

@@ -13,7 +13,7 @@ describe('Revisión IA', () => {
     cy.contains('Documento prueba')
       .parents('div.bg-white')
       .within(() => {
-        cy.contains('Revisión IA').click() // 👈 ajustado al texto real
+        cy.contains('Revisión IA').click()
       })
 
     cy.wait('@revisar', { timeout: 20000 })
@@ -29,7 +29,7 @@ describe('Revisión IA', () => {
     cy.contains('Volver').click()
 
     // Logout desde revisión
-    cy.contains('Salir').click() // 👈 ajustado
+    cy.contains('Salir').click()
     cy.url().should('include', '/')
     cy.get('button[type="submit"]').should('exist')
   })

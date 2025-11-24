@@ -22,7 +22,7 @@ describe('Eliminar documento', () => {
     cy.contains('Documento prueba').should('not.exist')
 
     // Logout
-    cy.contains('Salir').click() // 👈 corregido
+    cy.contains('Salir').click()
     cy.url().should('include', '/')
     cy.get('button[type="submit"]').should('exist')
   })
