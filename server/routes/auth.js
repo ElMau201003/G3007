@@ -3,7 +3,13 @@ import Usuario from "../models/usuario.js";
 
 const router = express.Router();
 
-// Registro manual
+// ✅ Estado del módulo Auth (primero, para que no lo intercepte /:uid)
+router.get("/status", (req, res) => {
+  console.log("✅ Ruta /api/auth/status alcanzada");
+  res.json({ authenticated: true });
+});
+
+// 📌 Registro manual
 router.post("/register", async (req, res) => {
   try {
     const { nombre, apellido, correo, rol } = req.body;
@@ -22,7 +28,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Registro tras login con Google
+// 📌 Registro tras login con Google
 router.post("/google-register", async (req, res) => {
   try {
     const { nombre, apellido, correo, rol, firebase_uid } = req.body;
@@ -47,14 +53,14 @@ router.post("/google-register", async (req, res) => {
   }
 });
 
-// Obtener usuario por uid
+// 📌 Verificar si el perfil está completo
 router.get("/usuarios/:uid", async (req, res) => {
   const usuario = await Usuario.findOne({ firebase_uid: req.params.uid });
-  if (!usuario)
-    return res.json({ perfilCompleto: false });
+  if (!usuario) return res.json({ perfilCompleto: false });
   res.json({ perfilCompleto: true });
 });
 
+// 📌 Obtener usuario por UID
 router.get("/:uid", async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ firebase_uid: req.params.uid });
@@ -65,11 +71,6 @@ router.get("/:uid", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
-
-router.get('/status', (req, res) => {
-  console.log('✅ Ruta /api/auth/status alcanzada');
-  res.json({ authenticated: true });
 });
 
 export default router;

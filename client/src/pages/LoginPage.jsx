@@ -1,7 +1,7 @@
-// src/pages/LoginPage.jsx
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext.js";
-import Loader from "../components/Loader.jsx"; // tu componente Loader
+import Loader from "../components/Loader.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const { loginWithGoogle, loginWithEmail, registerWithEmail } = useContext(AuthContext);
@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // 👈 para redirigir
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,6 +75,18 @@ export default function LoginPage() {
             {isRegister ? "Registrarse" : "Iniciar sesión"}
           </button>
         </form>
+
+        {/* 👇 Botón Olvidé mi contraseña */}
+        {!isRegister && (
+          <p className="mt-2 text-center text-sm">
+            <button
+              onClick={() => navigate("/forgot-password")}
+              className="text-blue-600 font-semibold hover:underline"
+            >
+              Olvidé mi contraseña
+            </button>
+          </p>
+        )}
 
         {mensaje && <p className="mt-4 text-center text-sm text-gray-700">{mensaje}</p>}
 

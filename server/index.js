@@ -34,3 +34,6 @@ app.use("/api/status", statusRoutes);
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`🚀 Servidor en http://localhost:${PORT}`));
 
+app.post("/test", (req, res) => {
+  res.json({ message: "Funciona" });
+});

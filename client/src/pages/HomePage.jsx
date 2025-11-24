@@ -9,7 +9,7 @@ export default function HomePage() {
   const [titulo, setTitulo] = useState("");
   const [documentos, setDocumentos] = useState([]);
   const [mensaje, setMensaje] = useState("");
-  const [loadingRevision, setLoadingRevision] = useState(false); // loader para revisión IA
+  const [loadingRevision, setLoadingRevision] = useState(false);
   const navigate = useNavigate();
 
   // Subir documento
@@ -41,7 +41,7 @@ export default function HomePage() {
     }
   };
 
-  // Obtener documentos del usuario
+  // Obtener documentos
   const fetchDocumentos = async () => {
     try {
       const res = await fetch(
@@ -60,7 +60,7 @@ export default function HomePage() {
 
   // Revisar con IA
   const handleRevisarIA = async (documentoId) => {
-    setLoadingRevision(true); // activa loader
+    setLoadingRevision(true);
     try {
       const res = await fetch(
         `http://localhost:4000/api/revisiones/${documentoId}`,
@@ -70,18 +70,16 @@ export default function HomePage() {
       if (res.ok) {
         navigate(`/revision/${data.documento_id}`);
       } else {
-        alert(
-          "❌ Error al generar revisión IA: " + (data.error || "Desconocido")
-        );
+        alert("❌ Error al generar revisión IA: " + (data.error || "Desconocido"));
       }
     } catch (error) {
       alert("❌ Error al conectar con el servidor");
     } finally {
-      setLoadingRevision(false); // desactiva loader
+      setLoadingRevision(false);
     }
   };
 
-  // Eliminar documento con confirmación
+  // Eliminar documento
   const handleEliminar = async (id) => {
     const confirm = window.confirm(
       "Este documento se eliminará permanentemente. ¿Deseas continuar?"
@@ -104,92 +102,112 @@ export default function HomePage() {
     }
   };
 
-  // 👇 Si está cargando revisión, muestra el Loader
   if (loadingRevision) {
     return <Loader message="Generando revisión IA..." />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto">
-        <header className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <header className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-800">
             Bienvenido, {user.displayName || user.nombre}
           </h2>
-          <button
-            onClick={logout}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-          >
-            Cerrar sesión
-          </button>
+          
         </header>
 
         {/* Subir Documento */}
-        <div className="bg-white shadow rounded-lg p-6 mb-8">
-          <h3 className="text-xl font-semibold mb-4">Subir Documento</h3>
+        <div className="bg-white shadow rounded-lg p-6 mb-10">
+          <h3 className="text-xl font-semibold mb-4 text-gray-700">
+            Subir Documento
+          </h3>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Título del documento"
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-              className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            <input
-              type="file"
-              onChange={(e) => setArchivo(e.target.files[0])}
-              className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+            <label className="text-sm font-medium text-gray-600">
+              Título
+              <input
+                type="text"
+                placeholder="Título del documento"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                className="mt-1 border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </label>
+            <label className="text-sm font-medium text-gray-600">
+              Archivo
+              <input
+                type="file"
+                onChange={(e) => setArchivo(e.target.files[0])}
+                className="mt-1 border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </label>
             <button
               type="submit"
-              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition flex items-center justify-center"
             >
-              Subir
+              📤 Subir
             </button>
           </form>
-          {mensaje && <p className="mt-2 text-gray-700">{mensaje}</p>}
+          {mensaje && (
+            <p
+              className={`mt-3 ${
+                mensaje.includes("✅")
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {mensaje}
+            </p>
+          )}
         </div>
 
         {/* Lista de Documentos */}
-        <h3 className="text-xl font-semibold mb-4">Mis Documentos</h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          {documentos.map((doc) => (
-            <div
-              key={doc._id}
-              className="bg-white shadow rounded-lg p-4 flex flex-col justify-between"
-            >
-              <div>
-                <h4 className="font-bold text-lg">{doc.titulo}</h4>
-                <a
-                  href={`http://localhost:4000${doc.archivo_url}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  Ver archivo
-                </a>
-              </div>
+        <h3 className="text-xl font-semibold mb-4 text-gray-700">
+          Mis Documentos
+        </h3>
+        {documentos.length === 0 ? (
+          <p className="text-gray-500">No tienes documentos aún.</p>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {documentos.map((doc) => (
+              <div
+                key={doc._id}
+                className="bg-white shadow rounded-lg p-5 hover:shadow-lg transition flex flex-col justify-between"
+              >
+                <div>
+                  <h4 className="font-bold text-lg text-gray-800">
+                    {doc.titulo}
+                  </h4>
+                  <a
+                    href={`http://localhost:4000${doc.archivo_url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    📄 Ver archivo
+                  </a>
+                </div>
 
-              <div className="mt-4 flex gap-2">
-                <button
-                  onClick={() => handleRevisarIA(doc._id)}
-                  className="bg-green-600 text-white py-2 px-3 rounded hover:bg-green-700 transition"
-                >
-                  Ver Revisión IA
-                </button>
-
-                <button
-                  onClick={() => handleEliminar(doc._id)}
-                  className="bg-red-600 text-white py-2 px-3 rounded hover:bg-red-700 transition"
-                >
-                  Eliminar
-                </button>
+                <div className="mt-4 flex gap-3">
+                  <button
+                    onClick={() => handleRevisarIA(doc._id)}
+                    className="bg-green-600 text-white py-2 px-3 rounded hover:bg-green-700 transition flex-1"
+                  >
+                    🤖 Revisión IA
+                  </button>
+                  <button
+                    onClick={() => handleEliminar(doc._id)}
+                    className="bg-red-600 text-white py-2 px-3 rounded hover:bg-red-700 transition flex-1"
+                  >
+                    🗑️ Eliminar
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

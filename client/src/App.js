@@ -13,6 +13,8 @@ import LoginPage from "./pages/LoginPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import PerfilPage from "./pages/PerfilPage.jsx";
 import RevisionPage from "./pages/RevisionPage.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+
 
 // ---------------- Layout general ----------------
 function Layout({ children }) {
@@ -71,6 +73,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route
         path="/perfil"
         element={
