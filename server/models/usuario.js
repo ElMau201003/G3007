@@ -7,7 +7,7 @@ const usuarioSchema = new mongoose.Schema({
   rol: { type: String, enum: ["estudiante", "docente", "admin"], default: "estudiante" },
   fecha_registro: { type: Date, default: Date.now },
   auth_provider: { type: String, default: "firebase" },
-  firebase_uid: { type: String, required: true, unique: true },
+  firebase_uid: { type: String, required: false, unique: true },
   perfilCompleto: { type: Boolean, default: false },
 });
 

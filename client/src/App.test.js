@@ -13,25 +13,25 @@ jest.mock('./context/AuthContext.js', () => ({
 }));
 
 // Mock de las páginas (usando require dentro del factory)
-jest.mock('./pages/LoginPage.js', () => {
+jest.mock('./pages/LoginPage.jsx', () => {
   const React = require('react');
   return function LoginPage() {
     return React.createElement('div', null, 'LoginPage');
   };
 });
-jest.mock('./pages/HomePage.js', () => {
+jest.mock('./pages/HomePage.jsx', () => {
   const React = require('react');
   return function HomePage() {
     return React.createElement('div', null, 'HomePage');
   };
 });
-jest.mock('./pages/PerfilPage.js', () => {
+jest.mock('./pages/PerfilPage.jsx', () => {
   const React = require('react');
   return function PerfilPage() {
     return React.createElement('div', null, 'PerfilPage');
   };
 });
-jest.mock('./pages/RevisionPage.js', () => {
+jest.mock('./pages/RevisionPage.jsx', () => {
   const React = require('react');
   return function RevisionPage() {
     return React.createElement('div', null, 'RevisionPage');
