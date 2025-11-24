@@ -1,7 +1,7 @@
-// src/pages/HomePage.jsx
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext.js";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader.jsx";
 
 export default function HomePage() {
   const { user, logout } = useContext(AuthContext);
@@ -9,6 +9,7 @@ export default function HomePage() {
   const [titulo, setTitulo] = useState("");
   const [documentos, setDocumentos] = useState([]);
   const [mensaje, setMensaje] = useState("");
+  const [loadingRevision, setLoadingRevision] = useState(false); // loader para revisión IA
   const navigate = useNavigate();
 
   // Subir documento
@@ -43,7 +44,9 @@ export default function HomePage() {
   // Obtener documentos del usuario
   const fetchDocumentos = async () => {
     try {
-      const res = await fetch(`http://localhost:4000/api/documentos/usuario/${user._id}`);
+      const res = await fetch(
+        `http://localhost:4000/api/documentos/usuario/${user._id}`
+      );
       const data = await res.json();
       if (res.ok) setDocumentos(data);
     } catch (error) {
@@ -57,18 +60,24 @@ export default function HomePage() {
 
   // Revisar con IA
   const handleRevisarIA = async (documentoId) => {
+    setLoadingRevision(true); // activa loader
     try {
-      const res = await fetch(`http://localhost:4000/api/revisiones/${documentoId}`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `http://localhost:4000/api/revisiones/${documentoId}`,
+        { method: "POST" }
+      );
       const data = await res.json();
       if (res.ok) {
         navigate(`/revision/${data.documento_id}`);
       } else {
-        alert("❌ Error al generar revisión IA: " + (data.error || "Desconocido"));
+        alert(
+          "❌ Error al generar revisión IA: " + (data.error || "Desconocido")
+        );
       }
     } catch (error) {
       alert("❌ Error al conectar con el servidor");
+    } finally {
+      setLoadingRevision(false); // desactiva loader
     }
   };
 
@@ -95,12 +104,24 @@ export default function HomePage() {
     }
   };
 
+  // 👇 Si está cargando revisión, muestra el Loader
+  if (loadingRevision) {
+    return <Loader message="Generando revisión IA..." />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Bienvenido, {user.displayName || user.nombre}</h2>
-          
+          <h2 className="text-2xl font-bold">
+            Bienvenido, {user.displayName || user.nombre}
+          </h2>
+          <button
+            onClick={logout}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+          >
+            Cerrar sesión
+          </button>
         </header>
 
         {/* Subir Documento */}
