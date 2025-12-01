@@ -44,30 +44,40 @@ export default function DocumentosPage() {
 
   return (
     <DashboardLayout>
-      <h2 className="text-2xl font-bold mb-6 text-blue-600">📂 Mis Documentos</h2>
+      <h2 className="text-2xl font-bold mb-6 text-blue-600 dark:text-blue-400">
+        📂 Mis Documentos
+      </h2>
       {documentos.length === 0 ? (
-        <p className="text-gray-500">No tienes documentos aún.</p>
+        <p className="text-gray-500 dark:text-gray-400">No tienes documentos aún.</p>
       ) : (
         <div className="grid md:grid-cols-2 gap-6">
           {documentos.map((doc) => (
-            <div key={doc._id} className="bg-white shadow rounded-lg p-5 flex flex-col justify-between">
+            <div
+              key={doc._id}
+              className="bg-white dark:bg-gray-800 shadow rounded-lg p-5 flex flex-col justify-between"
+            >
               <div>
-                <h4 className="font-bold text-lg text-gray-800">{doc.titulo}</h4>
+                <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100">
+                  {doc.titulo}
+                </h4>
                 <a
                   href={`http://localhost:4000${doc.archivo_url}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline text-sm flex items-center gap-1"
+                  className="text-blue-600 dark:text-blue-400 hover:underline text-sm flex items-center gap-1"
                 >
                   <DocumentMagnifyingGlassIcon className="h-5 w-5" />
                   Ver archivo
                 </a>
-                <p className="text-sm text-gray-600 mt-1">Estado: {doc.estado}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                  Estado: {doc.estado}
+                </p>
               </div>
               <div className="mt-4 flex gap-3">
                 <button
                   onClick={() => handleEliminar(doc._id)}
-                  className="flex items-center gap-2 bg-red-600 text-white py-2 px-3 rounded hover:bg-red-700 transition flex-1"
+                  className="flex items-center gap-2 bg-red-600 text-white py-2 px-3 rounded 
+                             hover:bg-red-700 dark:hover:bg-red-500 transition flex-1"
                 >
                   <TrashIcon className="h-5 w-5" />
                   Eliminar

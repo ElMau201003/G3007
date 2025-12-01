@@ -17,9 +17,17 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Revisador Académico</h1>
-      <button onClick={loginGoogle}>Iniciar sesión con Google</button>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 p-6">
+      <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-8">
+        Revisador Académico
+      </h1>
+      <button
+        onClick={loginGoogle}
+        className="px-6 py-3 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 
+                   dark:bg-blue-500 dark:hover:bg-blue-600 transition duration-200"
+      >
+        Iniciar sesión con Google
+      </button>
     </div>
   );
 }

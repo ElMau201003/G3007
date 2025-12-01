@@ -9,20 +9,22 @@ import {
 } from "react-router-dom";
 
 import { AuthContext } from "./context/AuthContext.js";
+import { ThemeProvider } from "./context/ThemeContext.js"; // 👈 nuevo
+
 import LoginPage from "./pages/LoginPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import PerfilPage from "./pages/PerfilPage.jsx";
 import RevisionPage from "./pages/RevisionPage.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
-import DocumentosPage from "./pages/DocumentosPage.jsx";   // 👈 nuevo
-import RevisionesPage from "./pages/RevisionesPage.jsx";   // 👈 nuevo
+import DocumentosPage from "./pages/DocumentosPage.jsx";
+import RevisionesPage from "./pages/RevisionesPage.jsx";
 
 // ---------------- Loader profesional ----------------
 function Loader({ message }) {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mb-4"></div>
-      <p className="text-gray-700 text-lg">{message}</p>
+      <p className="text-gray-700 dark:text-gray-200 text-lg">{message}</p>
     </div>
   );
 }
@@ -93,7 +95,9 @@ function AppRoutes() {
 export default function App() {
   return (
     <Router>
-      <AppRoutes />
+      <ThemeProvider>
+        <AppRoutes />
+      </ThemeProvider>
     </Router>
   );
 }
