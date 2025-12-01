@@ -22,22 +22,23 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <div className="bg-white shadow rounded-lg p-6 w-96">
-        <h2 className="text-xl font-bold mb-6 flex items-center gap-2 justify-center">
-          <EnvelopeIcon className="h-6 w-6 text-blue-600" />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 w-96">
+        <h2 className="text-xl font-bold mb-6 flex items-center gap-2 justify-center text-gray-800 dark:text-gray-100">
+          <EnvelopeIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           Recuperar contraseña
         </h2>
 
         {/* Input con ícono */}
-        <label className="flex items-center gap-2 border rounded px-3 py-2 mb-4 focus-within:ring-2 focus-within:ring-blue-500">
-          <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+        <label className="flex items-center gap-2 border rounded px-3 py-2 mb-4 focus-within:ring-2 focus-within:ring-blue-500 
+                          bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+          <EnvelopeIcon className="h-5 w-5 text-gray-400 dark:text-gray-300" />
           <input
             type="email"
             placeholder="Tu correo"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 outline-none"
+            className="flex-1 outline-none bg-transparent"
             required
           />
         </label>
@@ -45,7 +46,8 @@ export default function ForgotPassword() {
         {/* Botón con ícono */}
         <button
           onClick={handleReset}
-          className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition w-full"
+          className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded 
+                     hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition w-full"
         >
           <PaperAirplaneIcon className="h-5 w-5" />
           Enviar enlace
@@ -55,7 +57,9 @@ export default function ForgotPassword() {
         {mensaje && (
           <p
             className={`mt-4 text-center text-sm flex items-center justify-center gap-2 ${
-              mensaje.includes("✅") ? "text-green-600" : "text-red-600"
+              mensaje.includes("✅")
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
             }`}
           >
             {mensaje.includes("✅") ? (

@@ -10,19 +10,24 @@ import {
   BellIcon,
   MoonIcon,
 } from "@heroicons/react/24/solid";
+import { useTheme } from "../context/ThemeContext"; // 👈 usa el contexto como respaldo
 
 export default function DashboardLayout({ children, user, onLogout, onToggleTheme }) {
+  const { toggleTheme, theme } = useTheme(); // 👈 disponible siempre
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md">
-        <div className="p-6 font-bold text-xl text-blue-600">📚 Revisador Académico</div>
-        <nav className="flex flex-col gap-2 p-4 text-gray-700">
+      <aside className="w-64 bg-white dark:bg-gray-800 shadow-md">
+        <div className="p-6 font-bold text-xl text-blue-600 dark:text-blue-400">
+          📚 Revisador Académico
+        </div>
+        <nav className="flex flex-col gap-2 p-4 text-gray-700 dark:text-gray-200">
           <NavLink
             to="/home"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 ${
-                isActive ? "bg-blue-50 font-semibold text-blue-600" : ""
+              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900 ${
+                isActive ? "bg-blue-50 dark:bg-blue-700 font-semibold text-blue-600 dark:text-blue-300" : ""
               }`
             }
           >
@@ -33,8 +38,8 @@ export default function DashboardLayout({ children, user, onLogout, onToggleThem
           <NavLink
             to="/perfil"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 ${
-                isActive ? "bg-blue-50 font-semibold text-blue-600" : ""
+              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900 ${
+                isActive ? "bg-blue-50 dark:bg-blue-700 font-semibold text-blue-600 dark:text-blue-300" : ""
               }`
             }
           >
@@ -45,8 +50,8 @@ export default function DashboardLayout({ children, user, onLogout, onToggleThem
           <NavLink
             to="/documentos"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 ${
-                isActive ? "bg-blue-50 font-semibold text-blue-600" : ""
+              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900 ${
+                isActive ? "bg-blue-50 dark:bg-blue-700 font-semibold text-blue-600 dark:text-blue-300" : ""
               }`
             }
           >
@@ -57,8 +62,8 @@ export default function DashboardLayout({ children, user, onLogout, onToggleThem
           <NavLink
             to="/revisiones"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 ${
-                isActive ? "bg-blue-50 font-semibold text-blue-600" : ""
+              `flex items-center gap-2 px-3 py-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900 ${
+                isActive ? "bg-blue-50 dark:bg-blue-700 font-semibold text-blue-600 dark:text-blue-300" : ""
               }`
             }
           >
@@ -71,11 +76,11 @@ export default function DashboardLayout({ children, user, onLogout, onToggleThem
       {/* Main content */}
       <main className="flex-1 flex flex-col">
         {/* Navbar */}
-        <header className="flex justify-between items-center bg-white shadow px-6 py-3">
-          <h1 className="text-xl font-bold text-blue-600">Panel</h1>
+        <header className="flex justify-between items-center bg-white dark:bg-gray-800 shadow px-6 py-3">
+          <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">Panel</h1>
           <div className="flex items-center gap-4">
             {/* Notificaciones */}
-            <button className="relative text-gray-600 hover:text-blue-600">
+            <button className="relative text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               <BellIcon className="h-6 w-6" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">
                 3
@@ -83,13 +88,17 @@ export default function DashboardLayout({ children, user, onLogout, onToggleThem
             </button>
 
             {/* Toggle dark mode */}
-            <button onClick={onToggleTheme} className="text-gray-600 hover:text-blue-600">
+            <button
+              onClick={onToggleTheme ?? toggleTheme} // 👈 usa prop si viene, si no usa el contexto
+              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              aria-label={`Cambiar a modo ${theme === "light" ? "oscuro" : "claro"}`}
+            >
               <MoonIcon className="h-6 w-6" />
             </button>
 
             {/* Usuario */}
             {user && (
-              <span className="font-medium text-gray-700">
+              <span className="font-medium text-gray-700 dark:text-gray-200">
                 {user.displayName || user.nombre}
               </span>
             )}
@@ -106,7 +115,9 @@ export default function DashboardLayout({ children, user, onLogout, onToggleThem
         </header>
 
         {/* Contenido dinámico */}
-        <div className="flex-1 p-8">{children}</div>
+        <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+          {children}
+        </div>
       </main>
     </div>
   );

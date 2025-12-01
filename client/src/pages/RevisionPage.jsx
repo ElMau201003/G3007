@@ -1,3 +1,4 @@
+// src/pages/RevisionPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.jsx";
@@ -112,31 +113,33 @@ export default function RevisionPage() {
   if (loading) return <Loader message="Cargando revisión IA..." />;
   if (error)
     return (
-      <p className="text-red-500 text-center mt-6 flex items-center justify-center gap-2">
+      <p className="text-red-500 dark:text-red-400 text-center mt-6 flex items-center justify-center gap-2">
         <ExclamationTriangleIcon className="h-5 w-5" />
         {error}
       </p>
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 shadow rounded-lg p-6">
         <header className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <BookOpenIcon className="h-6 w-6 text-blue-600" />
+          <h2 className="text-2xl font-bold flex items-center gap-2 text-gray-800 dark:text-gray-100">
+            <BookOpenIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             Revisión IA
           </h2>
           <div className="flex gap-2">
             <button
               onClick={generarPDF}
-              className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+              className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded 
+                         hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition"
             >
               <ArrowDownTrayIcon className="h-5 w-5" />
               Descargar PDF
             </button>
             <button
               onClick={() => navigate("/home")}
-              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded 
+                         hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
             >
               <ArrowUturnLeftIcon className="h-5 w-5" />
               Volver
@@ -147,59 +150,65 @@ export default function RevisionPage() {
         {revision && (
           <div className="space-y-6">
             <div>
-              <p>
+              <p className="text-gray-700 dark:text-gray-200">
                 <strong>Gramática:</strong> {revision.precision_gramatica}%
               </p>
-              <p>
+              <p className="text-gray-700 dark:text-gray-200">
                 <strong>Similitud de plagio:</strong> {revision.similitud_plagio}%
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                <BookOpenIcon className="h-5 w-5 text-blue-600" />
+              <h4 className="font-semibold text-lg mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
+                <BookOpenIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 Errores gramaticales
               </h4>
               {revision.errores_gramaticales?.length > 0 ? (
-                <ul className="list-disc list-inside text-gray-700">
+                <ul className="list-disc list-inside text-gray-700 dark:text-gray-200">
                   {revision.errores_gramaticales.map((e, i) => (
                     <li key={i}>{e}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">No se encontraron errores gramaticales.</p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  No se encontraron errores gramaticales.
+                </p>
               )}
             </div>
 
             <div>
-              <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                <ExclamationTriangleIcon className="h-5 w-5 text-red-600" />
+              <h4 className="font-semibold text-lg mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
+                <ExclamationTriangleIcon className="h-5 w-5 text-red-600 dark:text-red-400" />
                 Posibles plagios
               </h4>
               {revision.plagio?.length > 0 ? (
-                <ul className="list-disc list-inside text-gray-700">
+                <ul className="list-disc list-inside text-gray-700 dark:text-gray-200">
                   {revision.plagio.map((p, i) => (
                     <li key={i}>{p}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">No se detectó plagio.</p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  No se detectó plagio.
+                </p>
               )}
             </div>
 
             <div>
-              <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                <ChatBubbleLeftRightIcon className="h-5 w-5 text-green-600" />
+              <h4 className="font-semibold text-lg mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
+                <ChatBubbleLeftRightIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
                 Citas detectadas
               </h4>
               {revision.citas?.length > 0 ? (
-                <ul className="list-disc list-inside text-gray-700">
+                <ul className="list-disc list-inside text-gray-700 dark:text-gray-200">
                   {revision.citas.map((c, i) => (
                     <li key={i}>{c}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">No se detectaron citas.</p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  No se detectaron citas.
+                </p>
               )}
             </div>
           </div>

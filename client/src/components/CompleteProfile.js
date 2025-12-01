@@ -18,40 +18,40 @@ function CompleteProfile() {
     e.preventDefault();
 
     if (!user?.uid) {
-        alert("No hay usuario autenticado");
-        return;
+      alert("No hay usuario autenticado");
+      return;
     }
 
     const payload = {
-        nombre: form.nombre,
-        apellido: form.apellido,
-        correo: user.email || form.correo,
-        rol: form.rol,
+      nombre: form.nombre,
+      apellido: form.apellido,
+      correo: user.email || form.correo,
+      rol: form.rol,
     };
 
     const res = await fetch(`http://localhost:4000/api/usuarios/${user.uid}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
 
     if (res.ok) {
-        const data = await res.json();
-        setProfileCompleted(data.perfilCompleto);
-        alert("Perfil completado correctamente");
+      const data = await res.json();
+      setProfileCompleted(data.perfilCompleto);
+      alert("Perfil completado correctamente");
     } else {
-        const error = await res.json();
-        alert("Error al guardar perfil: " + error.message);
+      const error = await res.json();
+      alert("Error al guardar perfil: " + error.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <form 
-        onSubmit={handleSubmit} 
-        className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6"
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 w-full max-w-md space-y-6"
       >
-        <h2 className="text-2xl font-bold text-gray-800 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 text-center">
           Completa tu perfil
         </h2>
 
@@ -63,7 +63,7 @@ function CompleteProfile() {
             value={form.nombre}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
           <input
             type="text"
@@ -72,7 +72,7 @@ function CompleteProfile() {
             value={form.apellido}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
           <input
             type="email"
@@ -80,14 +80,14 @@ function CompleteProfile() {
             placeholder="Correo"
             value={form.correo}
             readOnly
-            className="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed"
+            className="w-full px-4 py-2 border rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed"
           />
           <select
             name="rol"
             value={form.rol}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           >
             <option value="">Selecciona tu rol</option>
             <option value="estudiante">Estudiante</option>
@@ -97,7 +97,7 @@ function CompleteProfile() {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-500 transition duration-200"
         >
           Guardar perfil
         </button>
