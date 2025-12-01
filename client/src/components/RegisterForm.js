@@ -39,9 +39,9 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 max-w-md w-full">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6 text-center">
           Registro de Usuario
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -50,14 +50,16 @@ export default function RegisterForm() {
             placeholder="Nombre"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
+                       bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
           <input
             name="apellido"
             placeholder="Apellido"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
+                       bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
           <input
             name="correo"
@@ -65,7 +67,8 @@ export default function RegisterForm() {
             placeholder="Correo"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
+                       bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
           <input
             name="password"
@@ -73,13 +76,15 @@ export default function RegisterForm() {
             placeholder="Contraseña"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
+                       bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
           <select
             name="rol"
             onChange={handleChange}
             value={form.rol}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
+                       bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           >
             <option value="estudiante">Estudiante</option>
             <option value="docente">Docente</option>
@@ -88,7 +93,9 @@ export default function RegisterForm() {
             type="submit"
             disabled={loading}
             className={`w-full py-3 rounded-lg font-semibold text-white transition duration-200
-              ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+              ${loading 
+                ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed" 
+                : "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"}`}
           >
             {loading ? "Registrando..." : "Registrar"}
           </button>

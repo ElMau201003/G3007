@@ -47,42 +47,45 @@ export default function PerfilEditarPage() {
 
   return (
     <DashboardLayout user={user}>
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2">
-          <IdentificationIcon className="h-6 w-6 text-blue-600" />
+      <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2 text-gray-800 dark:text-gray-100">
+          <IdentificationIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           Editar Perfil
         </h2>
 
         <form onSubmit={handleSave} className="flex flex-col gap-4">
           {/* Nombre */}
-          <label className="flex items-center gap-2 border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
-            <UserIcon className="h-5 w-5 text-gray-400" />
+          <label className="flex items-center gap-2 border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 
+                            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+            <UserIcon className="h-5 w-5 text-gray-400 dark:text-gray-300" />
             <input
               type="text"
               placeholder="Nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               required
-              className="flex-1 outline-none"
+              className="flex-1 outline-none bg-transparent"
             />
           </label>
 
           {/* Apellido */}
-          <label className="flex items-center gap-2 border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
-            <UserIcon className="h-5 w-5 text-gray-400" />
+          <label className="flex items-center gap-2 border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 
+                            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+            <UserIcon className="h-5 w-5 text-gray-400 dark:text-gray-300" />
             <input
               type="text"
               placeholder="Apellido"
               value={apellido}
               onChange={(e) => setApellido(e.target.value)}
               required
-              className="flex-1 outline-none"
+              className="flex-1 outline-none bg-transparent"
             />
           </label>
 
           {/* Rol */}
-          <label className="flex items-center gap-2 border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
-            <AcademicCapIcon className="h-5 w-5 text-gray-400" />
+          <label className="flex items-center gap-2 border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 
+                            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+            <AcademicCapIcon className="h-5 w-5 text-gray-400 dark:text-gray-300" />
             <select
               value={rol}
               onChange={(e) => setRol(e.target.value)}
@@ -98,7 +101,8 @@ export default function PerfilEditarPage() {
           {/* Botón Guardar */}
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 rounded 
+                       hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
           >
             <CheckCircleIcon className="h-5 w-5" />
             Guardar cambios
@@ -109,7 +113,9 @@ export default function PerfilEditarPage() {
         {mensaje && (
           <p
             className={`mt-4 text-center text-sm flex items-center justify-center gap-2 ${
-              mensaje.includes("✅") ? "text-green-600" : "text-red-600"
+              mensaje.includes("✅")
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
             }`}
           >
             {mensaje.includes("✅") ? (
