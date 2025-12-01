@@ -1,32 +1,30 @@
+version: '3.8'
 services:
-  backend:
-    build: ./server
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./server:/app
-    env_file:
-      - ./server/.env
-    depends_on:
-      - mongo
-
-  frontend:
-    build: ./client
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./client:/app
-    env_file:
-      - ./client/.env
-    depends_on:
-      - backend
-
   mongo:
     image: mongo
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/miapp
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
 
 volumes:
   mongo-data:
